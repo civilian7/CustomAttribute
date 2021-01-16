@@ -156,6 +156,8 @@ begin
     LName := AName;
 
   FIniFile := TIniFile.Create(LName);
+  if FAutoSave then
+    LoadFromFile;
 end;
 
 destructor TIniConfig.Destroy;
