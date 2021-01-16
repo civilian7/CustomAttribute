@@ -9,7 +9,7 @@ uses
   System.IniFiles;
 
 type
-  IniBoolean = class(TCustomAttribute)
+  IniBooleanAttribute = class(TCustomAttribute)
   private
     FSection: string;
     FValue: Boolean;
@@ -20,7 +20,7 @@ type
     property Value: Boolean read FValue;
   end;
 
-  IniDateTime = class(TCustomAttribute)
+  IniDateTimeAttribute = class(TCustomAttribute)
   private
     FSection: string;
     FValue: TDateTime;
@@ -31,7 +31,7 @@ type
     property Value: TDateTime read FValue;
   end;
 
-  IniFloat = class(TCustomAttribute)
+  IniFloatAttribute = class(TCustomAttribute)
   private
     FSection: string;
     FValue: Double;
@@ -42,7 +42,7 @@ type
     property Value: Double read FValue;
   end;
 
-  IniInt64 = class(TCustomAttribute)
+  IniInt64Attribute = class(TCustomAttribute)
   private
     FSection: string;
     FValue: Int64;
@@ -53,7 +53,7 @@ type
     property Value: Int64 read FValue;
   end;
 
-  IniInteger = class(TCustomAttribute)
+  IniIntegerAttribute = class(TCustomAttribute)
   private
     FSection: string;
     FValue: Integer;
@@ -64,7 +64,7 @@ type
     property Value: Integer read FValue;
   end;
 
-  IniString = class(TCustomAttribute)
+  IniStringAttribute = class(TCustomAttribute)
   private
     FSection: string;
     FValue: string;
@@ -91,17 +91,17 @@ type
 
 implementation
 
-{ IniBoolean }
+{ IniBooleanAttribute }
 
-constructor IniBoolean.Create(const ASection: string; const AValue: Boolean);
+constructor IniBooleanAttribute.Create(const ASection: string; const AValue: Boolean);
 begin
   FSection := UpperCase(ASection);
   FValue := AValue;
 end;
 
-{ IniDateTime }
+{ IniDateTimeAttribute }
 
-constructor IniDateTime.Create(const ASection, AValue: string);
+constructor IniDateTimeAttribute.Create(const ASection, AValue: string);
 begin
   FSection := UpperCase(ASection);
   if (AValue <> '') then
@@ -110,33 +110,33 @@ begin
     FValue := 0;
 end;
 
-{ IniFloat }
+{ IniFloatAttribute }
 
-constructor IniFloat.Create(const ASection: string; const AValue: Double);
+constructor IniFloatAttribute.Create(const ASection: string; const AValue: Double);
 begin
   FSection := UpperCase(ASection);
   FValue := AValue;
 end;
 
-{ IniInt64 }
+{ IniInt64Attribute }
 
-constructor IniInt64.Create(const ASection: string; const AValue: Int64);
+constructor IniInt64Attribute.Create(const ASection: string; const AValue: Int64);
 begin
   FSection := UpperCase(ASection);
   FValue := AValue;
 end;
 
-{ IniInteger }
+{ IniIntegerAttribute }
 
-constructor IniInteger.Create(const ASection: string; const AValue: Integer);
+constructor IniIntegerAttribute.Create(const ASection: string; const AValue: Integer);
 begin
   FSection := UpperCase(ASection);
   FValue := AValue;
 end;
 
-{ IniString }
+{ IniStringAttribute }
 
-constructor IniString.Create(const ASection, AValue: string);
+constructor IniStringAttribute.Create(const ASection, AValue: string);
 begin
   FSection := UpperCase(ASection);
   FValue := AValue;
@@ -184,23 +184,23 @@ begin
     begin
       for LAttribute in LProp.GetAttributes do
       begin
-        if LAttribute is IniBoolean then
-          LProp.SetValue(Self, FIniFile.ReadBool(IniBoolean(LAttribute).Section, LProp.Name, IniBoolean(LAttribute).Value))
+        if LAttribute is IniBooleanAttribute then
+          LProp.SetValue(Self, FIniFile.ReadBool(IniBooleanAttribute(LAttribute).Section, LProp.Name, IniBooleanAttribute(LAttribute).Value))
         else
-        if LAttribute is IniDateTime then
-          LProp.SetValue(Self, FIniFile.ReadDateTime(IniDateTime(LAttribute).Section, LProp.Name, IniDateTime(LAttribute).Value))
+        if LAttribute is IniDateTimeAttribute then
+          LProp.SetValue(Self, FIniFile.ReadDateTime(IniDateTimeAttribute(LAttribute).Section, LProp.Name, IniDateTimeAttribute(LAttribute).Value))
         else
-        if LAttribute is IniFloat then
-          LProp.SetValue(Self, FIniFile.ReadFloat(IniString(LAttribute).Section, LProp.Name, IniFloat(LAttribute).Value))
+        if LAttribute is IniFloatAttribute then
+          LProp.SetValue(Self, FIniFile.ReadFloat(IniFloatAttribute(LAttribute).Section, LProp.Name, IniFloatAttribute(LAttribute).Value))
         else
-        if LAttribute is IniInt64 then
-          LProp.SetValue(Self, FIniFile.ReadInt64(IniString(LAttribute).Section, LProp.Name, IniInt64(LAttribute).Value))
+        if LAttribute is IniInt64Attribute then
+          LProp.SetValue(Self, FIniFile.ReadInt64(IniStringAttribute(LAttribute).Section, LProp.Name, IniInt64Attribute(LAttribute).Value))
         else
-        if LAttribute is IniInteger then
-          LProp.SetValue(Self, FIniFile.ReadInteger(IniString(LAttribute).Section, LProp.Name, IniInteger(LAttribute).Value))
+        if LAttribute is IniIntegerAttribute then
+          LProp.SetValue(Self, FIniFile.ReadInteger(IniIntegerAttribute(LAttribute).Section, LProp.Name, IniIntegerAttribute(LAttribute).Value))
         else
-        if LAttribute is IniString then
-          LProp.SetValue(Self, FIniFile.ReadString(IniString(LAttribute).Section, LProp.Name, IniString(LAttribute).Value));
+        if LAttribute is IniStringAttribute then
+          LProp.SetValue(Self, FIniFile.ReadString(IniStringAttribute(LAttribute).Section, LProp.Name, IniStringAttribute(LAttribute).Value));
       end;
     end;
   finally
@@ -222,23 +222,23 @@ begin
     begin
       for LAttribute in LProp.GetAttributes do
       begin
-        if LAttribute is IniBoolean then
-          FIniFile.WriteBool(IniBoolean(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsBoolean)
+        if LAttribute is IniBooleanAttribute then
+          FIniFile.WriteBool(IniBooleanAttribute(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsBoolean)
         else
-        if LAttribute is IniDateTime then
-          FIniFile.WriteDateTime(IniDateTime(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsExtended)
+        if LAttribute is IniDateTimeAttribute then
+          FIniFile.WriteDateTime(IniDateTimeAttribute(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsExtended)
         else
-        if LAttribute is IniFloat then
-          FIniFile.WriteFloat(IniFloat(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsExtended)
+        if LAttribute is IniFloatAttribute then
+          FIniFile.WriteFloat(IniFloatAttribute(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsExtended)
         else
-        if LAttribute is IniInt64 then
-          FIniFile.WriteInt64(IniInt64(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsInt64)
+        if LAttribute is IniInt64Attribute then
+          FIniFile.WriteInt64(IniInt64Attribute(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsInt64)
         else
-        if LAttribute is IniInteger then
-          FIniFile.WriteInteger(IniInteger(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsInteger)
+        if LAttribute is IniIntegerAttribute then
+          FIniFile.WriteInteger(IniIntegerAttribute(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsInteger)
         else
-        if LAttribute is IniString then
-          FIniFile.WriteString(IniString(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsString);
+        if LAttribute is IniStringAttribute then
+          FIniFile.WriteString(IniStringAttribute(LAttribute).Section, LProp.Name, LProp.GetValue(Self).AsString);
       end;
     end;
   finally
